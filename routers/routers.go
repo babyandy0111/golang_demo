@@ -23,9 +23,9 @@ func InitRouter() *gin.Engine {
 		apiv1.POST("/member", v1.AddMember)
 		apiv1.PUT("/member/:member_id", v1.EditMember)
 		apiv1.DELETE("/member/:member_id", v1.DeleteMember)
+		apiv1.GET("/test/:message", client.Hello)
 	}
 
-	apiv1.GET("/test/:message", client.Hello)
 	routes.GET("/ws", client.Ws)
 	routes.GET("/", client.Html)
 

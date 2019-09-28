@@ -1,4 +1,4 @@
-package servers
+package main
 
 import (
 	"context"
@@ -20,7 +20,7 @@ func (s *server) SaySomeThing(ctx context.Context, in *pb.AndyTestRequest) (*pb.
 	return &pb.AndyTestReply{Message: "Hello " + in.Name}, nil
 }
 
-func init() {
+func main() {
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)

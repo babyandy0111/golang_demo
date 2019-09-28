@@ -10,9 +10,11 @@ require (
 	github.com/golang/protobuf v1.3.2
 	github.com/gorilla/websocket v1.4.1 // indirect
 	github.com/jinzhu/gorm v1.9.11
-	github.com/kr/pretty v0.1.0 // indirect
-	github.com/labstack/echo v3.3.10+incompatible
+	github.com/labstack/echo v3.3.10+incompatible // indirect
 	github.com/labstack/gommon v0.3.0 // indirect
+	github.com/micro/go-log v0.1.0
+	github.com/micro/go-micro v1.10.0
+	github.com/nats-io/nats-server/v2 v2.1.0 // indirect
 	github.com/unknwon/com v1.0.1
 	golang.org/x/crypto v0.0.0-20190927123631-a832865fa7ad // indirect
 	google.golang.org/grpc v1.24.0
