@@ -1,0 +1,14 @@
+syntax = "proto3";
+package helloworld;
+
+service AndyServer {
+    rpc SaySomeThing (AndyTestRequest) returns (AndyTestReply) {}
+}
+
+message AndyTestRequest {
+    string name = 1;
+}
+
+message AndyTestReply {
+    string message = 1;
+}
