@@ -34,7 +34,7 @@ func Ws(req *gin.Context) {
 	// 创建gRPC连接
 	conn, err := grpc.Dial("localhost:3000", grpc.WithInsecure())
 	if err != nil {
-		log.Printf("连接失败: [%v]\n", err)
+		log.Printf("連接失敗: [%v]\n", err)
 		return
 	}
 	defer conn.Close()
