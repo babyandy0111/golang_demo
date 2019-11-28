@@ -42,7 +42,7 @@ func Ws(req *gin.Context) {
 	// 声明客户端
 	client := chatpb.NewChatClient(conn)
 	m := melody.New()
-	m.HandleRequest(req.Writer, req.Request)
+	_ = m.HandleRequest(req.Writer, req.Request)
 
 	// 处理websocket客户端新连接，并为每一个新连接创建一个 双向数据流
 	m.HandleConnect(func(s *melody.Session) {
@@ -56,7 +56,7 @@ func Ws(req *gin.Context) {
 		if err != nil {
 			log.Printf("创建数据流失败: [%v]\n", err)
 			// 如果创建数据流失败，向客户端发送失败信息 同时 关闭websocket连接
-			s.CloseWithMsg([]byte("创建数据流失败:" + err.Error()))
+			_ = s.CloseWithMsg([]byte("创建数据流失败:" + err.Error()))
 			return
 		}
 
@@ -71,21 +71,21 @@ func Ws(req *gin.Context) {
 
 				if err == io.EOF {
 					log.Println("⚠️ 收到服务端的结束信号")
-					s.CloseWithMsg([]byte("⚠️ 收到服务端的结束信号"))
+					_ = s.CloseWithMsg([]byte("⚠️ 收到服务端的结束信号"))
 					return
 				}
 
 				if err != nil {
 					// TODO: 处理接收错误
 					log.Println("接收数据出错:", err)
-					s.CloseWithMsg([]byte("接收数据出错" + err.Error()))
+					_ = s.CloseWithMsg([]byte("接收数据出错" + err.Error()))
 					return
 				}
 
 				log.Printf("[客户端收到]: %s", 响应.Output)
 				// 如果成功收到从服务端返回的消息, 将消息序列化后返回给 websocket 客户端
-				要返回的byte, _ := json.Marshal(响应)
-				s.Write(要返回的byte)
+				x, _ := json.Marshal(响应)
+				_ = s.Write(x)
 			}
 		}()
 	})
@@ -94,32 +94,32 @@ func Ws(req *gin.Context) {
 	m.HandleMessage(func(s *melody.Session, msg []byte) {
 		log.Println("收到消息:", msg)
 		// 把用户输入的信息原样返回 websocket 客户端
-		s.Write(msg)
+		_ = s.Write(msg)
 
 		// 将 []byte 类型的 msg 解析为 proto.Request
 		var 输入信息 chatpb.Request
 		if err := json.Unmarshal(msg, &输入信息); err != nil {
 			log.Println("解析输入信息失败:", err)
-			s.CloseWithMsg([]byte("输入信息解析失败"))
+			_ = s.CloseWithMsg([]byte("输入信息解析失败"))
 			return
 		}
 
 		// 从 session中取出 stream
 		被保存的数据流, ok := s.Get("stream")
 		if !ok {
-			s.CloseWithMsg([]byte("没有找到stream!"))
+			_ = s.CloseWithMsg([]byte("没有找到stream!"))
 			return
 		}
 
 		// 断言stream
 		stream, ok := 被保存的数据流.(chatpb.Chat_BidStreamClient)
 		if !ok {
-			s.CloseWithMsg([]byte("被保存的数据流不是Chat_BidStreamClient!"))
+			_ = s.CloseWithMsg([]byte("被保存的数据流不是Chat_BidStreamClient!"))
 			return
 		}
 
 		if err := stream.Send(&输入信息); err != nil {
-			s.CloseWithMsg([]byte("向gRPC服务端发送消息失败:" + err.Error()))
+			_ = s.CloseWithMsg([]byte("向gRPC服务端发送消息失败:" + err.Error()))
 			return
 		}
 	})

@@ -52,9 +52,9 @@ func ExistMemberById(id string) bool {
 	db.Select("member_id").Where("member_id = ?", id).First(&mamber)
 	if mamber.MemberID > 0 {
 		return true
+	} else {
+		return false
 	}
-
-	return false
 }
 
 func AddMember(account string) bool {
