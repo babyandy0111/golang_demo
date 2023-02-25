@@ -17,8 +17,7 @@ require (
 	github.com/mattn/go-isatty v0.0.9 // indirect
 	github.com/stretchr/testify v1.4.0 // indirect
 	github.com/unknwon/com v1.0.1
-	golang.org/x/crypto v0.0.0-20190927123631-a832865fa7ad // indirect
-	golang.org/x/net v0.0.0-20190724013045-ca1201d0de80 // indirect
+	golang.org/x/crypto v0.1.0 // indirect
 	google.golang.org/grpc v1.24.0
 	gopkg.in/ini.v1 v1.48.0 // indirect
 	gopkg.in/olahol/melody.v1 v1.0.0-20170518105555-d52139073376
